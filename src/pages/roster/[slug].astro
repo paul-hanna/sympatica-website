@@ -36,12 +36,12 @@ const { Content } = await render(director);
           ? <WorkGrid projects={projects} columns={2} />
           : <p class="director-empty mono">Selected work coming soon.</p>}
       </div>
-      <aside class="director-bio">
+      <div class="director-bio">
         <h2 class="eyebrow">Bio</h2>
         <div class="director-bio-body">
           <Content />
         </div>
-      </aside>
+      </div>
     </div>
   </article>
 </Base>

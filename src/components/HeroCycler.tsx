@@ -49,7 +49,11 @@ export function HeroCycler({ items, interval = 9000 }: Props) {
 
   return (
     <section class="hero-cycler">
-      <a href={`/work/${item.slug}`} class="hero-cycler-stage">
+      <a
+        href={`/work/${item.slug}`}
+        class="hero-cycler-stage"
+        aria-label={`View project: ${item.title}${item.director ? ` by ${item.director}` : ''}`}
+      >
         {items.map((it, i) => (
           <video
             key={it.slug}
