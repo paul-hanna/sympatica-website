@@ -1,0 +1,42 @@
+---
+import { WorkTile } from './WorkTile';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+  columns?: 2 | 3;
+}
+
+const { projects, columns = 3 } = Astro.props;
+---
+<div class={`work-grid work-grid-${columns}`}>
+  {projects.map((p) => (
+    <WorkTile
+      client:visible
+      slug={p.id}
+      title={p.data.title}
+      director={p.data.director}
+      client={p.data.client}
+      artist={p.data.artist}
+      category={p.data.category}
+      poster={p.data.poster}
+      preview_clip={p.data.preview_clip}
+    />
+  ))}
+</div>
+
+<style>
+  .work-grid {
+    display: grid;
+    gap: var(--gap-sm);
+    padding: var(--gap-md) var(--gutter);
+  }
+  .work-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .work-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 900px) {
+    .work-grid-3, .work-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .work-grid-3, .work-grid-2 { grid-template-columns: 1fr; }
+  }
+</style>
