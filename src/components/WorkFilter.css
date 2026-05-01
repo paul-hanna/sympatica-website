@@ -1,0 +1,23 @@
+.work-filter {
+  display: flex;
+  gap: var(--gap-sm);
+  padding: 0 var(--gutter);
+  margin-bottom: var(--gap-md);
+}
+.work-filter-pill {
+  padding: 6px 14px;
+  border: 1px solid var(--rule);
+  font-size: var(--type-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  transition: color var(--duration-fast) var(--ease),
+              background-color var(--duration-fast) var(--ease),
+              border-color var(--duration-fast) var(--ease);
+}
+.work-filter-pill:hover { color: var(--ink); border-color: var(--ink); }
+.work-filter-pill.is-active {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}

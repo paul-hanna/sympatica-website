@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { WorkFilter } from '../../components/WorkFilter';
+import WorkGrid from '../../components/WorkGrid.astro';
+import { byOrderThenYear } from '../../lib/sort';
+
+const projects = (await getCollection('projects')).toSorted(byOrderThenYear);
+---
+<Base title="Work · Sympatica">
+  <section class="work-page">
+    <div class="work-page-header">
+      <p class="eyebrow">Selected Works</p>
+      <WorkFilter client:load />
+    </div>
+    <WorkGrid projects={projects} columns={3} />
+  </section>
+</Base>
+
+<style>
+  .work-page-header {
+    padding: var(--gap-xl) var(--gutter) var(--gap-md);
+  }
+  .work-page-header .eyebrow { margin: 0 0 var(--gap-md); }
+</style>
