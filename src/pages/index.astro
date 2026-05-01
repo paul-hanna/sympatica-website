@@ -1,9 +1,29 @@
 ---
+import { getCollection, getEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { HeroCycler } from '../components/HeroCycler';
+import type { HeroItem } from '../components/HeroCycler';
+
+const featured = await getEntry('featured', 'default');
+const projects = await getCollection('projects');
+const projectsBySlug = new Map(projects.map((p) => [p.id, p]));
+
+const items: HeroItem[] = (featured?.data.slugs ?? [])
+  .map((slug: string) => projectsBySlug.get(slug))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p))
+  .map((p) => ({
+    slug: p.id,
+    title: p.data.title,
+    director: p.data.director,
+    subject: p.data.category === 'commercial' ? p.data.client : p.data.artist,
+    preview_clip: p.data.preview_clip,
+  }));
 ---
 <Base title="Sympatica">
-  <section style="padding: var(--gutter);">
-    <p class="eyebrow">Sympatica</p>
-    <h1 style="font-size: var(--type-display-large); font-weight: 500; letter-spacing: -0.02em; margin: 0;">It works.</h1>
-  </section>
+  <HeroCycler client:load items={items} interval={9000} />
 </Base>
+
+<style>
+  /* Homepage: tighten body up so hero fills the viewport */
+  main { padding: 0; }
+</style>
