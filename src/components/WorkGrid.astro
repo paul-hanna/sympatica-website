@@ -9,6 +9,7 @@ interface Props {
 
 const { projects, columns = 3 } = Astro.props;
 ---
+{/* .work-grid is the selector contract that WorkFilter.applyFilter targets. */}
 <div class={`work-grid work-grid-${columns}`}>
   {projects.map((p) => (
     <WorkTile

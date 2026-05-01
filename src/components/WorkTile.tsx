@@ -20,7 +20,7 @@ export function WorkTile(props: WorkTileProps) {
     <a
       href={`/work/${props.slug}`}
       class="work-tile"
-      data-category={props.category}
+      data-category={props.category}  // consumed by WorkFilter.applyFilter
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

@@ -10,14 +10,11 @@ const LABELS: Record<Category, string> = {
 };
 
 export function WorkFilter() {
-  const [active, setActive] = useState<Category>('all');
-
-  useEffect(() => {
+  const [active, setActive] = useState<Category>(() => {
+    if (typeof window === 'undefined') return 'all';
     const param = new URLSearchParams(window.location.search).get('cat');
-    if (param === 'commercial' || param === 'music-video') {
-      setActive(param);
-    }
-  }, []);
+    return param === 'commercial' || param === 'music-video' ? param : 'all';
+  });
 
   useEffect(() => {
     applyFilter(active);
@@ -28,6 +25,8 @@ export function WorkFilter() {
     const url = new URL(window.location.href);
     if (cat === 'all') url.searchParams.delete('cat');
     else url.searchParams.set('cat', cat);
+    // replaceState (not pushState): filter changes shouldn't pollute browser history,
+    // but the URL still reflects current state for sharing.
     window.history.replaceState({}, '', url.toString());
   };
 
@@ -47,6 +46,8 @@ export function WorkFilter() {
   );
 }
 
+// Couples to WorkGrid.astro (.work-grid wrapper) and WorkTile.tsx (data-category on the anchor).
+// Renaming any of those three identifiers must be done together.
 function applyFilter(active: Category) {
   const tiles = document.querySelectorAll<HTMLElement>('.work-grid [data-category]');
   tiles.forEach((tile) => {
