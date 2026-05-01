@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  directors: CollectionEntry<'directors'>[];
+}
+const { directors } = Astro.props;
+---
+<ul class="director-list">
+  {directors.map((d) => (
+    <li><a href={`/roster/${d.data.slug}`}>{d.data.name}</a></li>
+  ))}
+</ul>
+
+<style>
+  .director-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .director-list li {
+    font-size: var(--type-display-large);
+    line-height: 1.4;
+    font-weight: 400;
+  }
+  .director-list a { display: block; transition: opacity var(--duration-fast) var(--ease); }
+  .director-list:hover a { opacity: 0.5; }
+  .director-list:hover a:hover { opacity: 1; }
+  @media (max-width: 600px) {
+    .director-list li { font-size: var(--type-display); }
+  }
+</style>

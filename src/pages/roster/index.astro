@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import DirectorList from '../../components/DirectorList.astro';
+import { byOrder } from '../../lib/sort';
+
+const directors = (await getCollection('directors')).toSorted(byOrder);
+---
+<Base title="Roster · Sympatica">
+  <section class="roster">
+    <p class="eyebrow">Directors</p>
+    <DirectorList directors={directors} />
+  </section>
+</Base>
+
+<style>
+  .roster {
+    padding: var(--gap-2xl) var(--gutter) var(--gap-2xl);
+  }
+  .roster .eyebrow { margin: 0 0 var(--gap-lg); }
+</style>

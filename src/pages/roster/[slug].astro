@@ -1,0 +1,71 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import WorkGrid from '../../components/WorkGrid.astro';
+import { byOrderThenYear } from '../../lib/sort';
+
+export async function getStaticPaths() {
+  const directors = await getCollection('directors');
+  const projects = await getCollection('projects');
+  return directors.map((director) => ({
+    params: { slug: director.data.slug },
+    props: {
+      director,
+      projects: projects
+        .filter((p) => p.data.director === director.data.slug)
+        .toSorted(byOrderThenYear),
+    },
+  }));
+}
+
+interface Props {
+  director: CollectionEntry<'directors'>;
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { director, projects } = Astro.props;
+const { Content } = await render(director);
+---
+<Base title={`${director.data.name} · Sympatica`}>
+  <article class="director">
+    <div class="director-grid">
+      <div class="director-main">
+        <p class="eyebrow">Director</p>
+        <h1 class="director-name">{director.data.name}</h1>
+        <WorkGrid projects={projects} columns={2} />
+      </div>
+      <aside class="director-bio">
+        <p class="eyebrow">Bio</p>
+        <div class="director-bio-body">
+          <Content />
+        </div>
+      </aside>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .director-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--gap-xl);
+    padding: var(--gap-xl) var(--gutter);
+  }
+  @media (max-width: 900px) {
+    .director-grid { grid-template-columns: 1fr; }
+  }
+  .director-name {
+    font-size: var(--type-display);
+    font-weight: 500;
+    margin: var(--gap-xs) 0 var(--gap-lg);
+    letter-spacing: -0.02em;
+  }
+  .director-bio { padding-top: 32px; }
+  .director-bio-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink);
+    max-width: 360px;
+  }
+  .director-bio-body p { margin: 0 0 var(--gap-md); }
+</style>
