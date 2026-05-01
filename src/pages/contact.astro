@@ -3,19 +3,23 @@ import { getEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
 
 const contact = await getEntry('contact', 'default');
-const typeformId = contact?.data.typeform_id;
+if (!contact) throw new Error('Missing contact entry "default" in content/site/contact.json');
+const { email, city, typeform_id } = contact.data;
 ---
 <Base title="Contact · Sympatica">
   <section class="contact">
     <h1 class="sr-only">Contact</h1>
     <div class="contact-info">
       <p class="eyebrow">Contact</p>
-      <a href={`mailto:${contact?.data.email}`} class="contact-email">{contact?.data.email}</a>
-      <p class="contact-city mono">{contact?.data.city.toUpperCase()}</p>
+      <a href={`mailto:${email}`} class="contact-email">{email}</a>
+      <p class="contact-city mono">{city.toUpperCase()}</p>
+      <noscript>
+        <p class="contact-noscript">Form unavailable without JavaScript. Please email <a href={`mailto:${email}`}>{email}</a>.</p>
+      </noscript>
     </div>
-    <div class="contact-form" data-tf-live={typeformId}></div>
+    <div class="contact-form" data-tf-live={typeform_id} role="region" aria-label="Contact form"></div>
   </section>
-  <script src="//embed.typeform.com/next/embed.js" async></script>
+  <script src="https://embed.typeform.com/next/embed.js" async></script>
 </Base>
 
 <style>
