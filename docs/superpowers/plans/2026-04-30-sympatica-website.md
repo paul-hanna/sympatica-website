@@ -470,10 +470,10 @@ const projects = defineCollection({
     director: z.string(),
     category: z.enum(['commercial', 'music-video']),
     year: z.number().int().min(2000).max(2100),
-    youtube_id: z.string(),
-    preview_clip: z.string(),
-    poster: z.string(),
-    stills: z.array(z.string()).optional(),
+    youtube_id: z.string().regex(/^[A-Za-z0-9_-]{11}$/, 'Must be an 11-char YouTube video ID, not a URL'),
+    preview_clip: z.string().startsWith('/', 'Must be an absolute path under /public'),
+    poster: z.string().startsWith('/', 'Must be an absolute path under /public'),
+    stills: z.array(z.string().startsWith('/', 'Must be an absolute path under /public')).optional(),
     credits: z.array(z.object({ role: z.string(), name: z.string() })).optional(),
     order: z.number().int().default(100),
   }).superRefine((data, ctx) => {
@@ -499,7 +499,7 @@ const featured = defineCollection({
   loader: file('content/site/featured.json'),
   schema: z.object({
     id: z.string(),
-    slugs: z.array(z.string()).min(3).max(5),
+    slugs: z.array(z.string()).min(1).max(5),
   }),
 });
 
@@ -581,12 +581,12 @@ order: 2
 [
   {
     "id": "default",
-    "slugs": ["sample-spot", "sample-music-video", "sample-spot"]
+    "slugs": ["sample-spot", "sample-music-video"]
   }
 ]
 ```
 
-(Note: minimum is 3 slugs per schema. Repeat one for now until real content fills it. We'll relax this once there are 3+ real projects — for now duplicating is the simplest way to satisfy the validator while developing.)
+Schema requires `min(1).max(5)` — flexible so dev data doesn't have to fake duplicates. HeroCycler should handle a 1-item list gracefully (it just won't cycle).
 
 - [ ] **Step 6: Write `content/site/contact.json`**
 
