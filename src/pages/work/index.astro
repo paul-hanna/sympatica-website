@@ -9,6 +9,7 @@ const projects = (await getCollection('projects')).toSorted(byOrderThenYear);
 ---
 <Base title="Work · Sympatica">
   <section class="work-page">
+    <h1 class="sr-only">Work</h1>
     <div class="work-page-header">
       <p class="eyebrow">Selected Works</p>
       <WorkFilter client:load />

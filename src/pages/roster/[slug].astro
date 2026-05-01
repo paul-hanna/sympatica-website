@@ -32,10 +32,12 @@ const { Content } = await render(director);
       <div class="director-main">
         <p class="eyebrow">Director</p>
         <h1 class="director-name">{director.data.name}</h1>
-        <WorkGrid projects={projects} columns={2} />
+        {projects.length > 0
+          ? <WorkGrid projects={projects} columns={2} />
+          : <p class="director-empty mono">Selected work coming soon.</p>}
       </div>
       <aside class="director-bio">
-        <p class="eyebrow">Bio</p>
+        <h2 class="eyebrow">Bio</h2>
         <div class="director-bio-body">
           <Content />
         </div>
@@ -68,4 +70,11 @@ const { Content } = await render(director);
     max-width: 360px;
   }
   .director-bio-body p { margin: 0 0 var(--gap-md); }
+  .director-empty {
+    color: var(--ink-muted);
+    font-size: var(--type-eyebrow);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: var(--gap-md) 0 var(--gap-2xl);
+  }
 </style>

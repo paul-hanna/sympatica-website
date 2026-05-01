@@ -8,6 +8,7 @@ const directors = (await getCollection('directors')).toSorted(byOrder);
 ---
 <Base title="Roster · Sympatica">
   <section class="roster">
+    <h1 class="sr-only">Roster</h1>
     <p class="eyebrow">Directors</p>
     <DirectorList directors={directors} />
   </section>

@@ -24,8 +24,10 @@ const { directors } = Astro.props;
     font-weight: 400;
   }
   .director-list a { display: block; transition: opacity var(--duration-fast) var(--ease); }
-  .director-list:hover a { opacity: 0.5; }
-  .director-list:hover a:hover { opacity: 1; }
+  @media (hover: hover) and (pointer: fine) {
+    .director-list:hover a { opacity: 0.5; }
+    .director-list:hover a:hover { opacity: 1; }
+  }
   @media (max-width: 600px) {
     .director-list li { font-size: var(--type-display); }
   }
