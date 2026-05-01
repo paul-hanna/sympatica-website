@@ -1,0 +1,48 @@
+---
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const contact = await getEntry('contact', 'default');
+const typeformId = contact?.data.typeform_id;
+---
+<Base title="Contact · Sympatica">
+  <section class="contact">
+    <h1 class="sr-only">Contact</h1>
+    <div class="contact-info">
+      <p class="eyebrow">Contact</p>
+      <a href={`mailto:${contact?.data.email}`} class="contact-email">{contact?.data.email}</a>
+      <p class="contact-city mono">{contact?.data.city.toUpperCase()}</p>
+    </div>
+    <div class="contact-form" data-tf-live={typeformId}></div>
+  </section>
+  <script src="//embed.typeform.com/next/embed.js" async></script>
+</Base>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--gap-xl);
+    padding: var(--gap-2xl) var(--gutter);
+  }
+  @media (max-width: 768px) { .contact { grid-template-columns: 1fr; } }
+
+  .contact-info .eyebrow { margin: 0 0 var(--gap-md); }
+  .contact-email {
+    display: block;
+    font-size: var(--type-lede);
+    margin-bottom: var(--gap-sm);
+  }
+  .contact-city {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .contact-form {
+    min-height: 480px;
+    background: var(--rule);
+  }
+</style>

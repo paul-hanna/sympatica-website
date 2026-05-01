@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import { Content as AboutContent, frontmatter as aboutFrontmatter } from '../../content/site/about.mdx';
+---
+<Base title="About · Sympatica">
+  <article class="about">
+    <h1 class="sr-only">About</h1>
+    <section class="about-manifesto">
+      <p class="eyebrow">About</p>
+      <div class="about-manifesto-body">
+        <AboutContent />
+      </div>
+    </section>
+
+    <section class="about-team">
+      <h2 class="eyebrow">Team</h2>
+      <div class="about-team-grid">
+        {aboutFrontmatter.team.map((member: { name: string; role: string }) => (
+          <div class="about-team-member">
+            <div class="about-team-name">{member.name}</div>
+            <div class="about-team-role mono">{member.role}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .about-manifesto {
+    padding: var(--gap-2xl) var(--gutter) var(--gap-xl);
+    max-width: 780px;
+  }
+  .about-manifesto .eyebrow { margin: 0 0 var(--gap-md); }
+  .about-manifesto-body p:first-child {
+    font-size: var(--type-lede);
+    line-height: 1.45;
+    margin: 0 0 var(--gap-md);
+  }
+  .about-manifesto-body p {
+    font-size: var(--type-body);
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 var(--gap-md);
+  }
+
+  .about-team {
+    border-top: 1px solid var(--rule);
+    padding: var(--gap-xl) var(--gutter) var(--gap-2xl);
+  }
+  .about-team .eyebrow { margin: 0 0 var(--gap-md); }
+  .about-team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap-lg);
+  }
+  @media (max-width: 768px) { .about-team-grid { grid-template-columns: 1fr; } }
+  .about-team-name { font-weight: 500; }
+  .about-team-role {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+</style>
