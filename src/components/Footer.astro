@@ -1,0 +1,31 @@
+---
+import { getEntry } from 'astro:content';
+const contact = await getEntry('contact', 'default');
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="footer-row mono">
+    <span>SYMPATICA</span>
+    <span>{contact?.data.email}</span>
+    <span>{contact?.data.city.toUpperCase()}</span>
+    <span>© {year}</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--rule);
+    padding: var(--gap-lg) var(--gutter);
+    margin-top: var(--gap-2xl);
+  }
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--gap-md);
+    font-size: var(--type-eyebrow);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+</style>
