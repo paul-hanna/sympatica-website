@@ -27,6 +27,7 @@
   /* Layout */
   --max-content: 1280px;
   --gutter: 24px;
+  --header-h: 56px;
 
   /* Motion */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);

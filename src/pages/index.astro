@@ -20,6 +20,7 @@ const items: HeroItem[] = (featured?.data.slugs ?? [])
   }));
 ---
 <Base title="Sympatica">
+  <h1 class="sr-only">Sympatica</h1>
   <HeroCycler client:load items={items} interval={9000} />
 </Base>
 

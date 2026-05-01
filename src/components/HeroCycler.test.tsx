@@ -35,7 +35,7 @@ describe('HeroCycler', () => {
 
   it('jumps to clicked tickbar segment', () => {
     const { getAllByRole, getByText } = render(<HeroCycler items={items} interval={9999} />);
-    const segments = getAllByRole('tab');
+    const segments = getAllByRole('button');
     fireEvent.click(segments[2]);
     expect(getByText('C')).toBeInTheDocument();
   });
@@ -43,7 +43,7 @@ describe('HeroCycler', () => {
   it('stops auto-advance after user interacts', async () => {
     vi.useFakeTimers();
     const { getByText, getAllByRole } = render(<HeroCycler items={items} interval={1000} />);
-    fireEvent.click(getAllByRole('tab')[1]);
+    fireEvent.click(getAllByRole('button')[1]);
     await act(async () => { vi.advanceTimersByTime(2002); });
     expect(getByText('B')).toBeInTheDocument(); // still B, no advance
     vi.useRealTimers();

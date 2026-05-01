@@ -1,7 +1,7 @@
 .hero-cycler {
   position: relative;
   width: 100%;
-  height: calc(100vh - 56px); /* viewport minus sticky header */
+  height: calc(100vh - var(--header-h));
   background: #000;
   overflow: hidden;
 }

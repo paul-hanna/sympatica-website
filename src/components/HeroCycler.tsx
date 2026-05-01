@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import './HeroCycler.css';
 
 export interface HeroItem {
@@ -17,6 +17,20 @@ interface Props {
 export function HeroCycler({ items, interval = 9000 }: Props) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  useEffect(() => {
+    videoRefs.current.forEach((v, i) => {
+      if (!v) return;
+      if (i === active) {
+        const p = v.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      } else {
+        v.pause();
+      }
+    });
+  }, [active]);
 
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -38,7 +52,8 @@ export function HeroCycler({ items, interval = 9000 }: Props) {
       <a href={`/work/${item.slug}`} class="hero-cycler-stage">
         {items.map((it, i) => (
           <video
-            key={it.slug + i}
+            key={it.slug}
+            ref={(el) => { videoRefs.current[i] = el; }}
             src={it.preview_clip}
             class={`hero-cycler-video ${i === active ? 'is-active' : ''}`}
             autoPlay
@@ -58,13 +73,12 @@ export function HeroCycler({ items, interval = 9000 }: Props) {
         </div>
       </div>
 
-      <div class="hero-cycler-tickbar" role="tablist">
-        {items.map((_, i) => (
+      <div class="hero-cycler-tickbar">
+        {items.map((it, i) => (
           <button
             type="button"
-            role="tab"
-            aria-selected={i === active}
-            aria-label={`Show item ${i + 1}`}
+            aria-current={i === active ? 'true' : undefined}
+            aria-label={`Show slide ${i + 1}: ${it.title}`}
             class={`hero-cycler-tick ${i === active ? 'is-active' : ''}`}
             onClick={() => jump(i)}
           />
