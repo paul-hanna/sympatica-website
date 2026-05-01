@@ -25,7 +25,7 @@ export function WorkTile(props: WorkTileProps) {
       onMouseLeave={() => setHovered(false)}
     >
       <div class="work-tile-media">
-        <img src={props.poster} alt={props.title} loading="lazy" />
+        <img src={props.poster} alt="" loading="lazy" />
         {hovered && (
           <video
             src={props.preview_clip}
