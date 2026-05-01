@@ -1,0 +1,35 @@
+{
+  "name": "sympatica-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint:links": "lychee dist --no-progress",
+    "lint:a11y": "axe ./dist/**/*.html --exit"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "@astrojs/mdx": "^4.0.0",
+    "@astrojs/preact": "^4.0.0",
+    "preact": "^10.24.0",
+    "@fontsource/inter": "^5.1.0",
+    "@fontsource/jetbrains-mono": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0",
+    "@testing-library/preact": "^3.2.4",
+    "@testing-library/jest-dom": "^6.6.0",
+    "jsdom": "^25.0.0",
+    "@axe-core/cli": "^4.10.0",
+    "@preact/preset-vite": "^2.10.0"
+  }
+}
