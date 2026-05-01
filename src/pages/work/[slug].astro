@@ -28,8 +28,10 @@ const categoryLabel = data.category === 'commercial' ? 'Commercial' : 'Music Vid
   <article class="project">
     <div class="project-video">
       <iframe
-        src={`https://www.youtube.com/embed/${data.youtube_id}?rel=0`}
-        title={data.title}
+        src={`https://www.youtube-nocookie.com/embed/${data.youtube_id}?rel=0`}
+        title={`${data.title} — video`}
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       ></iframe>
@@ -43,7 +45,7 @@ const categoryLabel = data.category === 'commercial' ? 'Commercial' : 'Music Vid
       </div>
 
       {data.credits && data.credits.length > 0 && (
-        <dl class="project-credits mono">
+        <dl class="project-credits mono" aria-label="Credits">
           {data.credits.map((c) => (
             <div class="project-credit-row">
               <dt>{c.role}</dt>
@@ -56,13 +58,16 @@ const categoryLabel = data.category === 'commercial' ? 'Commercial' : 'Music Vid
 
     {data.stills && data.stills.length > 0 && (
       <div class="project-stills">
-        {data.stills.map((s) => <img src={s} alt={`${data.title} still`} loading="lazy" />)}
+        {data.stills.map((s, i) => (
+          <img src={s} alt={`${data.title}, still ${i + 1} of ${data.stills!.length}`} loading="lazy" />
+        ))}
       </div>
     )}
 
-    <div class="project-next">
+    <nav class="project-next" aria-label="Project navigation">
+      <a href="/work" class="mono">← All work</a>
       <a href={`/work/${next.slug}`} class="mono">Next project — {next.title} →</a>
-    </div>
+    </nav>
   </article>
 </Base>
 
@@ -124,7 +129,10 @@ const categoryLabel = data.category === 'commercial' ? 'Commercial' : 'Music Vid
   .project-next {
     border-top: 1px solid var(--rule);
     padding: var(--gap-lg) var(--gutter);
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gap-md);
+    flex-wrap: wrap;
     font-size: var(--type-eyebrow);
     letter-spacing: 0.18em;
     text-transform: uppercase;
