@@ -1,0 +1,42 @@
+:root {
+  /* Default: dark */
+  --bg: #0a0a0a;
+  --ink: #ededed;
+  --ink-muted: rgba(237, 237, 237, 0.6);
+  --rule: rgba(237, 237, 237, 0.12);
+
+  /* Type */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Scale */
+  --type-eyebrow: 11px;
+  --type-body: 14px;
+  --type-lede: 22px;
+  --type-display: 32px;
+  --type-display-large: 48px;
+
+  /* Spacing */
+  --gap-xs: 4px;
+  --gap-sm: 8px;
+  --gap-md: 16px;
+  --gap-lg: 24px;
+  --gap-xl: 48px;
+  --gap-2xl: 96px;
+
+  /* Layout */
+  --max-content: 1280px;
+  --gutter: 24px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 200ms;
+  --duration-base: 400ms;
+}
+
+html[data-theme='light'] {
+  --bg: #ffffff;
+  --ink: #0a0a0a;
+  --ink-muted: rgba(10, 10, 10, 0.6);
+  --rule: rgba(10, 10, 10, 0.12);
+}
