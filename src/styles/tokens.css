@@ -41,3 +41,7 @@ html[data-theme='light'] {
   --ink-muted: rgba(10, 10, 10, 0.6);
   --rule: rgba(10, 10, 10, 0.12);
 }
+
+@media (max-width: 720px) {
+  :root { --header-h: 88px; }
+}

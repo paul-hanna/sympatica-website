@@ -28,4 +28,8 @@ const year = new Date().getFullYear();
     text-transform: uppercase;
     color: var(--ink-muted);
   }
+  @media (max-width: 720px) {
+    .site-footer { margin-top: var(--gap-xl); padding: var(--gap-md) var(--gutter); }
+    .footer-row { gap: var(--gap-sm); }
+  }
 </style>

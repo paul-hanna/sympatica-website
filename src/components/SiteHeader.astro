@@ -39,4 +39,18 @@ import { ThemeToggle } from './ThemeToggle';
     text-transform: uppercase;
   }
   .site-nav a:hover { opacity: 1; color: var(--ink-muted); }
+
+  @media (max-width: 720px) {
+    .site-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--gap-sm);
+      padding: var(--gap-sm) var(--gutter);
+    }
+    .site-nav {
+      gap: var(--gap-md);
+      justify-content: space-between;
+      flex-wrap: nowrap;
+    }
+  }
 </style>
