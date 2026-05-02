@@ -1,8 +1,8 @@
 .hero-cycler {
   position: relative;
   width: 100%;
-  height: calc(100vh - var(--header-h));
-  height: calc(100svh - var(--header-h)); /* iOS Safari: account for browser chrome */
+  height: 100vh;
+  height: 100svh; /* iOS Safari: small viewport (accounts for browser chrome) */
   background: #000;
   overflow: hidden;
 }

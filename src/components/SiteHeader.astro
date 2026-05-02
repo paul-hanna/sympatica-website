@@ -1,8 +1,12 @@
 ---
+interface Props {
+  transparent?: boolean;
+}
+const { transparent = false } = Astro.props;
 ---
-<header class="site-header">
+<header class:list={["site-header", transparent && "site-header-transparent"]}>
   <a href="/" class="wordmark mono">SYMPATICA</a>
-  <nav class="site-nav mono">
+  <nav class="site-nav">
     <a href="/work">Work</a>
     <a href="/roster">Roster</a>
     <a href="/about">About</a>
@@ -23,6 +27,7 @@
     border-bottom: 1px solid var(--rule);
   }
   .wordmark {
+    font-family: var(--font-mono);
     font-size: var(--type-eyebrow);
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -31,12 +36,32 @@
   .site-nav {
     display: flex;
     align-items: center;
-    gap: 24px;
-    font-size: var(--type-eyebrow);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    gap: var(--gap-lg);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
   }
   .site-nav a:hover { opacity: 1; color: var(--ink-muted); }
+
+  /* Transparent variant: overlays the hero on the homepage */
+  .site-header-transparent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+    border-bottom: 0;
+    color: #fff;
+  }
+  .site-header-transparent .wordmark,
+  .site-header-transparent .site-nav a {
+    color: #fff;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+  }
+  .site-header-transparent .site-nav {
+    font-size: 18px;
+  }
 
   @media (max-width: 720px) {
     .site-header {
@@ -49,6 +74,8 @@
       gap: var(--gap-md);
       justify-content: space-between;
       flex-wrap: nowrap;
+      font-size: 15px;
     }
+    .site-header-transparent .site-nav { font-size: 16px; }
   }
 </style>

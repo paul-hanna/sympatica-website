@@ -21,12 +21,13 @@ const items: HeroItem[] = (featured?.data.slugs ?? [])
     preview_clip: p.data.preview_clip,
   }));
 ---
-<Base title="Sympatica">
+<Base title="Sympatica" transparentHeader hideFooter>
   <h1 class="sr-only">Sympatica</h1>
   <HeroCycler client:load items={items} interval={9000} />
 </Base>
 
-<style>
-  /* Homepage: tighten body up so hero fills the viewport */
-  main { padding: 0; }
+<style is:global>
+  /* Homepage: lock to viewport, no scroll */
+  html, body { height: 100%; overflow: hidden; }
+  main { padding: 0; height: 100%; }
 </style>

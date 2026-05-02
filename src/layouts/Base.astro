@@ -7,12 +7,20 @@ interface Props {
   title: string;
   description?: string;
   hideHeader?: boolean;
+  transparentHeader?: boolean;
+  hideFooter?: boolean;
 }
 
-const { title, description = 'Sympatica is a New York commercial production company.', hideHeader = false } = Astro.props;
+const {
+  title,
+  description = 'Sympatica is a New York commercial production company.',
+  hideHeader = false,
+  transparentHeader = false,
+  hideFooter = false,
+} = Astro.props;
 ---
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,10 +29,10 @@ const { title, description = 'Sympatica is a New York commercial production comp
     <title>{title}</title>
   </head>
   <body>
-    {!hideHeader && <SiteHeader />}
+    {!hideHeader && <SiteHeader transparent={transparentHeader} />}
     <main>
       <slot />
     </main>
-    <Footer />
+    {!hideFooter && <Footer />}
   </body>
 </html>
