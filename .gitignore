@@ -24,3 +24,6 @@ Thumbs.db
 
 # Test coverage
 coverage/
+
+# Master / source media kept locally but not committed (use compressed versions in repo)
+**/*-master.*
