@@ -6,7 +6,9 @@ import type { HeroItem } from '../components/HeroCycler';
 
 const featured = await getEntry('featured', 'default');
 const projects = await getCollection('projects');
+const directors = await getCollection('directors');
 const projectsBySlug = new Map(projects.map((p) => [p.id, p]));
+const directorNameBySlug = new Map(directors.map((d) => [d.data.slug, d.data.name]));
 
 const items: HeroItem[] = (featured?.data.slugs ?? [])
   .map((slug: string) => projectsBySlug.get(slug))
@@ -14,7 +16,7 @@ const items: HeroItem[] = (featured?.data.slugs ?? [])
   .map((p) => ({
     slug: p.id,
     title: p.data.title,
-    director: p.data.director,
+    director: directorNameBySlug.get(p.data.director) ?? p.data.director,
     subject: p.data.category === 'commercial' ? p.data.client : p.data.artist,
     preview_clip: p.data.preview_clip,
   }));

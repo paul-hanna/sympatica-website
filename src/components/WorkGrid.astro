@@ -1,6 +1,6 @@
 ---
+import { getCollection, type CollectionEntry } from 'astro:content';
 import { WorkTile } from './WorkTile';
-import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   projects: CollectionEntry<'projects'>[];
@@ -8,6 +8,9 @@ interface Props {
 }
 
 const { projects, columns = 3 } = Astro.props;
+
+const directors = await getCollection('directors');
+const directorNameBySlug = new Map(directors.map((d) => [d.data.slug, d.data.name]));
 ---
 {/* .work-grid is the selector contract that WorkFilter.applyFilter targets. */}
 <div class={`work-grid work-grid-${columns}`}>
@@ -16,7 +19,7 @@ const { projects, columns = 3 } = Astro.props;
       client:visible
       slug={p.id}
       title={p.data.title}
-      director={p.data.director}
+      director={directorNameBySlug.get(p.data.director) ?? p.data.director}
       client={p.data.client}
       artist={p.data.artist}
       category={p.data.category}
