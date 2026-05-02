@@ -44,6 +44,20 @@ export function HeroCycler({ items, interval = 9000 }: Props) {
     setActive(i);
   };
 
+  const goPrev = (e: Event) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setPaused(true);
+    setActive((i) => (i - 1 + items.length) % items.length);
+  };
+
+  const goNext = (e: Event) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setPaused(true);
+    setActive((i) => (i + 1) % items.length);
+  };
+
   const item = items[active];
   const counter = `${String(active + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
 
@@ -76,6 +90,23 @@ export function HeroCycler({ items, interval = 9000 }: Props) {
           {item.director}{item.subject ? ` · ${item.subject}` : ''}
         </div>
       </div>
+
+      {items.length > 1 && (
+        <>
+          <button
+            type="button"
+            class="hero-cycler-arrow hero-cycler-arrow-prev"
+            aria-label="Previous slide"
+            onClick={goPrev}
+          >‹</button>
+          <button
+            type="button"
+            class="hero-cycler-arrow hero-cycler-arrow-next"
+            aria-label="Next slide"
+            onClick={goNext}
+          >›</button>
+        </>
+      )}
 
       <div class="hero-cycler-tickbar">
         {items.map((it, i) => (

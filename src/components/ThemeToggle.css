@@ -1,7 +1,0 @@
-.theme-toggle {
-  font-size: 14px;
-  line-height: 1;
-  color: var(--ink-muted);
-  transition: color var(--duration-fast) var(--ease);
-}
-.theme-toggle:hover { color: var(--ink); }

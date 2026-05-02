@@ -35,7 +35,7 @@ describe('HeroCycler', () => {
 
   it('jumps to clicked tickbar segment', () => {
     const { getAllByRole, getByText } = render(<HeroCycler items={items} interval={9999} />);
-    const segments = getAllByRole('button');
+    const segments = getAllByRole('button', { name: /Show slide/i });
     fireEvent.click(segments[2]);
     expect(getByText('C')).toBeInTheDocument();
   });
@@ -43,10 +43,33 @@ describe('HeroCycler', () => {
   it('stops auto-advance after user interacts', async () => {
     vi.useFakeTimers();
     const { getByText, getAllByRole } = render(<HeroCycler items={items} interval={1000} />);
-    fireEvent.click(getAllByRole('button')[1]);
+    fireEvent.click(getAllByRole('button', { name: /Show slide/i })[1]);
     await act(async () => { vi.advanceTimersByTime(2002); });
     expect(getByText('B')).toBeInTheDocument(); // still B, no advance
     vi.useRealTimers();
+  });
+
+  it('next arrow advances forward and pauses auto-advance', async () => {
+    vi.useFakeTimers();
+    const { getByLabelText, getByText } = render(<HeroCycler items={items} interval={1000} />);
+    fireEvent.click(getByLabelText('Next slide'));
+    expect(getByText('B')).toBeInTheDocument();
+    await act(async () => { vi.advanceTimersByTime(2002); });
+    expect(getByText('B')).toBeInTheDocument(); // paused, stays on B
+    vi.useRealTimers();
+  });
+
+  it('prev arrow goes backward with wrap-around', () => {
+    const { getByLabelText, getByText } = render(<HeroCycler items={items} interval={9999} />);
+    fireEvent.click(getByLabelText('Previous slide'));
+    expect(getByText('C')).toBeInTheDocument(); // 0 wraps to last
+  });
+
+  it('hides arrows when only one item', () => {
+    const single = [items[0]];
+    const { queryByLabelText } = render(<HeroCycler items={single} interval={9999} />);
+    expect(queryByLabelText('Next slide')).toBeNull();
+    expect(queryByLabelText('Previous slide')).toBeNull();
   });
 
   it('honors prefers-reduced-motion: no auto-advance', async () => {
